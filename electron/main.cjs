@@ -3,10 +3,10 @@ const { execFile } = require('child_process');
 const fs = require('fs'), path = require('path'), os = require('os');
 
 const AW = 'http://localhost:5600/api/0';
-const BUCKET = `aw-clockin_${os.hostname()}`;
+const BUCKET = `aw-clocki_${os.hostname()}`;
 const cfgFile = () => path.join(app.getPath('userData'), 'config.json');
 let cfg = { presets: ['Deep Work', 'Meetings', 'Code Review'], last: 'Deep Work' };
-const legacyCfg = path.join(app.getPath('appData'), 'ClockIn', 'config.json'); // pre-rename location
+const legacyCfg = path.join(app.getPath('appData'), 'Clocki', 'config.json'); // pre-rename location
 try { cfg = { ...cfg, ...JSON.parse(fs.readFileSync(fs.existsSync(cfgFile()) ? cfgFile() : legacyCfg, 'utf8')) }; } catch {}
 const save = () => fs.writeFileSync(cfgFile(), JSON.stringify(cfg, null, 2));
 
@@ -87,7 +87,7 @@ async function aw(p, o = {}) {
 async function tick() {
   try {
     if (!bucketOk) {
-      await aw(`/buckets/${BUCKET}`, { method: 'POST', body: JSON.stringify({ client: 'clockin', type: 'clockin', hostname: os.hostname() }) });
+      await aw(`/buckets/${BUCKET}`, { method: 'POST', body: JSON.stringify({ client: 'clocki', type: 'clocki', hostname: os.hostname() }) });
       bucketOk = true;
     }
     const events = await aw(`/buckets/${BUCKET}/events?start=${encodeURIComponent(weekStartOf().toISOString())}&limit=-1`) || [];
