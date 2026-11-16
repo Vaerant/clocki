@@ -1,0 +1,61 @@
+
+{
+  "name": "clocki",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.cjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vaerant/clocki.git"
+  },
+  "homepage": "https://github.com/Vaerant/clocki",
+  "bugs": {
+    "url": "https://github.com/Vaerant/clocki/issues"
+  },
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && electron .\"",
+    "start": "vite build && electron .",
+    "dist": "vite build && electron-builder --win --publish never"
+  },
+  "build": {
+    "appId": "dev.clocki",
+    "productName": "Clocki",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "electron/**",
+      "build/icon.png"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "artifactName": "Clocki-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "Clocki-${version}-portable.${ext}"
+    }
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "concurrently": "^9.0.0",
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0",
+    "tailwindcss": "^4.0.0",
+    "vite": "^5.4.0",
+    "wait-on": "^8.0.0"
+  },
+  "description": "Minimal time clock that logs to ActivityWatch"
+}
